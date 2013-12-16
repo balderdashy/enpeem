@@ -5,11 +5,11 @@ var path = require('path');
 describe('basic usage', function () {
 
 	function rimrafTestStuff (cb) {
-		var pathToDep = path.resolve(
+		this.pathToDep = path.resolve(
 			__dirname,
 			'../node_modules/lodash');
 
-		fs.remove(pathToDep, cb);
+		fs.remove(this.pathToDep, cb);
 	}
 	before(rimrafTestStuff);
 	after(rimrafTestStuff);
@@ -28,9 +28,39 @@ describe('basic usage', function () {
 	});
 
 	it('should actually install things', function (cb) {
-		var pathToDep = path.resolve(
-		__dirname, '../node_modules/lodash');
+		fs.lstat(this.pathToDep, cb);
+	});
 
-		fs.lstat(pathToDep, cb);
+
+});
+
+
+
+describe('with more options', function (){
+
+	function rimrafTestStuff (cb) {
+		this.pathToDep = path.resolve(
+			__dirname,
+			'../node_modules/mocha');
+
+		fs.remove(this.pathToDep, cb);
+	}
+	before(rimrafTestStuff);
+	after(rimrafTestStuff);
+	
+	it('should not crash', function (cb) {
+		this.npm.install([
+		  'mocha'
+		], {
+		  loglevel: 'silent',
+		  'min-cache': 999999999
+		}, cb);
+	});
+
+	it('should actually install things', function (cb) {
+		fs.lstat(this.pathToDep, cb);
 	});
 });
+
+
+
