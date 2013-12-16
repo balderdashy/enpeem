@@ -37,8 +37,8 @@ module.exports = {
 			cmd += '';
 
 			// DRY:
-			console.log('WOULD HAVE RUN::');
-			console.log(cmd);
+			// console.log('WOULD HAVE RUN::');
+			// console.log(cmd);
 
 			// Spin up child process
 			var npm = exec(cmd);
