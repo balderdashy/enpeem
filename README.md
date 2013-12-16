@@ -21,7 +21,7 @@ var modules = [
 ];
 
 npm.install(modules, {
-  loglevel: silent,
+  loglevel: 'silent',
   'cache-min': 999999999
 }, function (err) { /* ... */ });
 ```

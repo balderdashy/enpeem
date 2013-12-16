@@ -1,20 +1,7 @@
 var switcher = require('sails-util/switcher');
 var concat =  require('./reduceStream').concat;
 var exec =  require('child_process').exec;
-
-
-
-var errors = {
-	cantFindNpm: function ( consoleOutput_fromNpmV ) {
-		return new Error(
-			'Couldn\'t install dependencies because `npm` could not be found.' +
-			'(Is it in your $PATH?)' + '\n' +
-			'Anyways, you\'ll have to install them yourself with `npm install`.'+
-			'Here\'s what I got when I tried `npm -v` :' + '\n' +
-			consoleOutput_fromNpmV
-		);
-	}
-};
+var Err = require('./errors');
 
 module.exports = {
 
@@ -27,22 +14,42 @@ module.exports = {
 	 */
 	install: function (dependencies, options, cb) {
 		cb = switcher(cb || new Function ());
-
 		
 		// Check to make sure npm CLI is accessible
 		var NPM_V_OUTPUT = /^[0-9]+\.[0-9]+\.[0-9]+/;
-		concat( exec('npm -v').stdout, function (err, result) {
+		var stdout$npm_v = exec('npm -v').stdout;
+		concat(stdout$npm_v, function (err, result) {
 			if (err) return cb(err);
 			if (typeof result !== 'string' ||
 				!result.match(NPM_V_OUTPUT)) {
-				return cb(errors.cantFindNpm(result));
+				return cb(Err.cantFindNpm(result));
 			}
 
 			// Build command to execute
+			var cmd = '';
+			cmd += 'npm install ';
+			for (var i in dependencies) {
+				cmd += dependencies[i] + ' ';
+			}
+			for (var key in options) {
+				cmd += '--'+key + ' ' + options[key] + ' ';
+			}
+			cmd += '';
+
+			// DRY:
+			// console.log('WOULD HAVE RUN::');
+			// console.log(cmd);
 
 			// Spin up child process
-			// exec('npm install ').stderr.pipe(process.stderr);
-			cb.success();
+			var npm = exec(cmd);
+			var stderr$npm = npm.stderr;
+			var stdout$npm = npm.stdout;
+
+			// Watch in case anything goes wrong
+			stderr$npm.pipe(process.stderr);
+
+			// When finished, trigger success cb
+			npm.on('exit', cb.success);
 		});
 
 	}
