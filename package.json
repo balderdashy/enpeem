@@ -1,0 +1,28 @@
+{
+  "name": "enpeem",
+  "version": "0.0.0",
+  "description": "Lightweight wrapper for accessing npm programmatically (alternative to adding `npm` as a dependency)",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikermcneil/enpeem.git"
+  },
+  "keywords": [
+    "npm",
+    "npm-install",
+    "npm",
+    "install",
+    "dependency",
+    "offline",
+    "cache"
+  ],
+  "author": "Mike McNeil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikermcneil/enpeem/issues"
+  },
+  "homepage": "https://github.com/mikermcneil/enpeem"
+}
