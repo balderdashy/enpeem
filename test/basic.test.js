@@ -23,7 +23,8 @@ describe('basic usage', function () {
 		this.npm.install([
 		  'lodash'
 		], {
-		  loglevel: 'silent'
+			production: true,
+		  // loglevel: 'silent'
 		}, cb);
 	});
 
@@ -52,8 +53,9 @@ describe('with more options', function (){
 		this.npm.install([
 		  'mocha'
 		], {
-		  loglevel: 'silent',
-		  'min-cache': 999999999
+		  // loglevel: 'silent',
+		  production: true,
+		  // 'min-cache': 999999999
 		}, cb);
 	});
 
