@@ -1,5 +1,9 @@
-var exec =  require('child_process').exec;
-var reduce = require('stream-reduce');
+/**
+ * Module dependencies
+ */
+
+var exec =  require('child_process').exec
+	, reduce = require('stream-reduce');
 
 
 

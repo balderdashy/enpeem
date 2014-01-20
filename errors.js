@@ -1,4 +1,7 @@
-
+/**
+ * Module errors
+ * @type {Object}
+ */
 module.exports = {
 	cantFindNpm: function ( consoleOutputFrom_npm_v ) {
 		return new Error(
@@ -8,7 +11,7 @@ module.exports = {
 			
 			''
 			// TODO: bring this stuff back
-			// (would need to reduce both stderr and stdout stream)
+			// (would need to reduce both stderr and stdout stream to get nice output for the error msg)
 			// 
 			// '\n'+
 			// 'Here\'s what I got when I tried `npm -v`:' + '\n' + consoleOutputFrom_npm_v

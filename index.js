@@ -1,7 +1,14 @@
-var switcher = require('sails-util/switcher');
-var concat =  require('./reduceStream').concat;
-var exec =  require('child_process').exec;
-var Err = require('./errors');
+/**
+ * Module dependencies
+ */
+
+var concat =  require('./reduceStream').concat
+	, exec =  require('child_process').exec
+	, Err = require('./errors');
+
+
+
+
 
 module.exports = {
 
@@ -13,7 +20,7 @@ module.exports = {
 	 * @param  {Object|Function} cb
 	 */
 	install: function (dependencies, options, cb) {
-		cb = switcher(cb || new Function ());
+		cb = cb || function (){};
 		
 		// Check to make sure npm CLI is accessible
 		var NPM_V_OUTPUT = /^[0-9]+\.[0-9]+\.[0-9]+/;
@@ -49,7 +56,7 @@ module.exports = {
 			stderr$npm.pipe(process.stderr);
 
 			// When finished, trigger success cb
-			npm.on('exit', cb.success);
+			npm.on('exit', function onSuccess (){ cb(); });
 		});
 
 	}
