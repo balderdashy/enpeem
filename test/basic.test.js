@@ -20,11 +20,10 @@ describe('basic usage', function () {
 	});
 
 	it('should not crash', function (cb) {
-		this.npm.install([
-		  'lodash'
-		], {
-			production: true,
-		  // loglevel: 'silent'
+		this.npm.install({
+			dependencies: ['lodash'],
+      production: true,
+      loglevel: 'silent'
 		}, cb);
 	});
 
@@ -48,16 +47,15 @@ describe('with more options', function (){
 	}
 	before(rimrafTestStuff);
 	after(rimrafTestStuff);
-	
-	it('should not crash', function (cb) {
-		this.npm.install([
-		  'mocha'
-		], {
-		  // loglevel: 'silent',
-		  production: true,
-		  // 'min-cache': 999999999
-		}, cb);
-	});
+
+  it('should not crash', function(cb) {
+    this.npm.install({
+      dependencies: ['mocha'],
+      loglevel: 'silent',
+      production: true,
+      // 'min-cache': 999999999
+    }, cb);
+  });
 
 	it('should actually install things', function (cb) {
 		fs.lstat(this.pathToDep, cb);
