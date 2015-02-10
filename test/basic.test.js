@@ -99,7 +99,7 @@ describe('with save option', function (){
 });
 
 
-describe('with save-dev options', function (){
+describe('with save-dev option', function (){
 
 	function rimrafTestStuff (cb) {
 		this.pathToDep = path.resolve(
@@ -129,6 +129,36 @@ describe('with save-dev options', function (){
 		//require does not work because of caching
 		var devDependencies = JSON.parse(fs.readFileSync(this.pathToPackage), { encoding: 'utf8'}).devDependencies;
 		assert('string' in devDependencies);
+		fs.lstat(this.pathToDep, cb);
+	});
+});
+
+
+describe('with path option', function (){
+
+	function rimrafTestStuff (cb) {
+		this.pathToDep = path.resolve(
+			__dirname,
+			'../new-folder/node_modules/string');
+
+		fs.removeSync('new-folder');
+		exec('npm rm string --save-dev', cb);
+	}
+	before(rimrafTestStuff);
+	after(rimrafTestStuff);
+
+	it('should not crash', function(cb) {
+		npm.install({
+			dependencies: ['string'],
+			loglevel: 'silent',
+			production: false,
+			path: 'new-folder',
+			// 'min-cache': 999999999
+		}, cb);
+	});
+
+	it('should actually install things', function (cb) {
+		//require does not work because of caching
 		fs.lstat(this.pathToDep, cb);
 	});
 });

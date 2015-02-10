@@ -23,6 +23,7 @@ module.exports = {
       cmdArgs: options.dependencies,
       save: options.save || false,
       saveDev: options.saveDev || false,
+      path: options.path || '',
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined
@@ -38,6 +39,7 @@ module.exports = {
   update: function(options, cb) {
     return doNpmCommand({
       npmCommand: 'update',
+      path: options.path || '',
       cmdArgs: [],
       cmdOptions: options.cmdOptions
     }, cb);
@@ -79,6 +81,10 @@ function doNpmCommand(options, cb) {
 
     if ('saveDev' in options && options.saveDev) {
       cmd += '--save-dev ';
+    }
+
+    if (options.path.length > 0) {
+      cmd += '--prefix ' + options.path + ' ';
     }
 
     for (var key in options.cmdOptions) {
