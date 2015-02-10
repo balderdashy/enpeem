@@ -21,12 +21,12 @@ module.exports = {
     return doNpmCommand({
       npmCommand: 'install',
       cmdArgs: options.dependencies,
-      save: options.save || false,
-      saveDev: options.saveDev || false,
-      path: options.path || '',
       cmdOptions: {
         production: options.production || false,
-        loglevel: options.loglevel || undefined
+        loglevel: options.loglevel || undefined,
+        save: options.save || false,
+        'save-dev': options.saveDev || false,
+        prefix: options.prefix || undefined,
       }
     }, cb);
   },
@@ -41,7 +41,11 @@ module.exports = {
       npmCommand: 'update',
       path: options.path || '',
       cmdArgs: [],
-      cmdOptions: options.cmdOptions
+      cmdOptions: {
+        production: options.production || false,
+        loglevel: options.loglevel || undefined,
+        prefix: options.prefix || undefined,
+      }
     }, cb);
   }
 };
@@ -75,17 +79,17 @@ function doNpmCommand(options, cb) {
     cmd += options.cmdArgs.join(' ');
     cmd += ' ';
 
-    if ('save' in options && options.save) {
-        cmd += '--save ';
-    }
-
-    if ('saveDev' in options && options.saveDev) {
-      cmd += '--save-dev ';
-    }
-
-    if (options.path.length > 0) {
-      cmd += '--prefix ' + options.path + ' ';
-    }
+    // if ('save' in options && options.save) {
+    //     cmd += '--save ';
+    // }
+    //
+    // if ('saveDev' in options && options.saveDev) {
+    //   cmd += '--save-dev ';
+    // }
+    //
+    // if (options.path.length > 0) {
+    //   cmd += '--prefix ' + options.path + ' ';
+    // }
 
     for (var key in options.cmdOptions) {
       // Skip undefined options

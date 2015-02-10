@@ -152,7 +152,7 @@ describe('with path option', function (){
 			dependencies: ['string'],
 			loglevel: 'silent',
 			production: false,
-			path: 'new-folder',
+			prefix: 'new-folder',
 			// 'min-cache': 999999999
 		}, cb);
 	});
