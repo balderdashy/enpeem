@@ -2,7 +2,7 @@ var assert = require ('assert');
 var fs = require('fs-extra');
 var path = require('path');
 var exec = require('child_process').exec;
-// var execSync = require('child_process').execSync;
+var npm = require('../');
 
 describe('basic usage', function () {
 
@@ -50,7 +50,7 @@ describe('with more options', function (){
 	after(rimrafTestStuff);
 
   it('should not crash', function(cb) {
-    this.npm.install({
+    npm.install({
       dependencies: ['mocha'],
       loglevel: 'silent',
       production: true,
@@ -81,7 +81,7 @@ describe('with save option', function (){
 	after(rimrafTestStuff);
 
 	it('should not crash', function(cb) {
-		this.npm.install({
+		npm.install({
 			dependencies: ['mocha'],
 			loglevel: 'silent',
 			production: false,
@@ -116,7 +116,7 @@ describe('with save-dev options', function (){
 	after(rimrafTestStuff);
 
 	it('should not crash', function(cb) {
-		this.npm.install({
+		npm.install({
 			dependencies: ['string'],
 			loglevel: 'silent',
 			production: false,
