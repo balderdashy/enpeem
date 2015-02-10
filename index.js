@@ -21,6 +21,8 @@ module.exports = {
     return doNpmCommand({
       npmCommand: 'install',
       cmdArgs: options.dependencies,
+      save: options.save || false,
+      saveDev: options.saveDev || false,
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined
@@ -70,6 +72,15 @@ function doNpmCommand(options, cb) {
     cmd += 'npm ' + options.npmCommand + ' ';
     cmd += options.cmdArgs.join(' ');
     cmd += ' ';
+
+    if ('save' in options && options.save) {
+        cmd += '--save ';
+    }
+
+    if ('saveDev' in options && options.saveDev) {
+      cmd += '--save-dev ';
+    }
+
     for (var key in options.cmdOptions) {
       // Skip undefined options
       if (options.cmdOptions[key] !== undefined) {
