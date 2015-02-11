@@ -23,7 +23,10 @@ module.exports = {
       cmdArgs: options.dependencies,
       cmdOptions: {
         production: options.production || false,
-        loglevel: options.loglevel || undefined
+        loglevel: options.loglevel || undefined,
+        save: options.save || false,
+        'save-dev': options.saveDev || false,
+        prefix: options.prefix || undefined,
       }
     }, cb);
   },
@@ -36,8 +39,13 @@ module.exports = {
   update: function(options, cb) {
     return doNpmCommand({
       npmCommand: 'update',
+      path: options.path || '',
       cmdArgs: [],
-      cmdOptions: options.cmdOptions
+      cmdOptions: {
+        production: options.production || false,
+        loglevel: options.loglevel || undefined,
+        prefix: options.prefix || undefined,
+      }
     }, cb);
   }
 };
@@ -70,6 +78,19 @@ function doNpmCommand(options, cb) {
     cmd += 'npm ' + options.npmCommand + ' ';
     cmd += options.cmdArgs.join(' ');
     cmd += ' ';
+
+    // if ('save' in options && options.save) {
+    //     cmd += '--save ';
+    // }
+    //
+    // if ('saveDev' in options && options.saveDev) {
+    //   cmd += '--save-dev ';
+    // }
+    //
+    // if (options.path.length > 0) {
+    //   cmd += '--prefix ' + options.path + ' ';
+    // }
+
     for (var key in options.cmdOptions) {
       // Skip undefined options
       if (options.cmdOptions[key] !== undefined) {
