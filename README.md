@@ -1,5 +1,6 @@
 enpeem
 ======
+[![Build Status](https://travis-ci.org/balderdashy/enpeem.svg?branch=master)](https://travis-ci.org/balderdashy/enpeem) [![npm version](https://badge.fury.io/js/enpeem.svg)](https://npmjs.org/package/enpeem)
 
 Lightweight wrapper for accessing npm programmatically (alternative to adding `npm` as a dependency)
 
