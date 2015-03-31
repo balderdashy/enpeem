@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/mikermcneil/enpeem",
   "dependencies": {
-    "stream-reduce": "1.0.3"
+    "which": "^1.0.9"
   },
   "devDependencies": {
     "babel": "^4.7.16",
