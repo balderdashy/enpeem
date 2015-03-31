@@ -17,7 +17,7 @@ describe('doNpmCommand', function () {
   it('should error if no npmCommand is provided', async function () {
     try {
       var exitCode = await doNpmCommand();
-      expect(false, 'Should have errored.').to.not.exist; //eslint-disable-line no-unused-expressions
+      expect(exitCode, 'Should have errored.').to.not.exist; //eslint-disable-line no-unused-expressions
     } catch (error) {
       expect(error.message).to.equal('`npmCommand` option is required');
     }
