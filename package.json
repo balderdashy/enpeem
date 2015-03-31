@@ -24,7 +24,7 @@
     "node": ">=0.12",
     "iojs": ">=1.0.0"
   },
-  "author": "Mike McNeil",
+  "author": "Mike McNeil, Markus Padourek",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mikermcneil/enpeem/issues"

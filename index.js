@@ -18,6 +18,9 @@ module.exports = {
     return doNpmCommand({
       npmCommand: 'install',
       cmdArgs: options.dependencies,
+      skip: options.skip || false,
+      dryRun: options.dryRun || false,
+      cmdPrefix: options.cmdPrefix || false,
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined,
@@ -36,8 +39,11 @@ module.exports = {
   update: function (options) {
     return doNpmCommand({
       npmCommand: 'update',
-      path: options.path || '',
       cmdArgs: [],
+      path: options.path || '',
+      skip: options.skip || false,
+      dryRun: options.dryRun || false,
+      cmdPrefix: options.cmdPrefix || false,
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined,
