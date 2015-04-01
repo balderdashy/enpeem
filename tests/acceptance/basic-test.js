@@ -9,6 +9,7 @@ var npm 				= require('../../');
 
 var root       = process.cwd();
 var tmproot    = path.join(root, 'tmp');
+var tmpdir;
 
 function getPathToDep(npmModule, customRoot) {
 	customRoot = customRoot || path.join('..', '..');
@@ -22,7 +23,6 @@ function getPathToDep(npmModule, customRoot) {
 }
 
 describe('basic usage', function () {
-	var tmpdir;
 	var dependency = 'lodash';
 
 	before(function () {
@@ -63,12 +63,10 @@ describe('basic usage', function () {
 		}
 	});
 
-
 });
 
 
 describe('with more options', function (){
-	var tmpdir;
 	var dependency = 'mocha';
 
 	before(function () {
@@ -108,7 +106,6 @@ describe('with more options', function (){
 
 
 describe('with save option', function () {
-	var tmpdir;
 	var dependency = 'mocha';
 
 	before(function () {
@@ -150,7 +147,6 @@ describe('with save option', function () {
 
 
 describe('with save-dev option', function () {
-	var tmpdir;
 	var dependency = 'string';
 
 	before(function () {
@@ -192,7 +188,6 @@ describe('with save-dev option', function () {
 
 
 describe('with prefix/custom path option', function () {
-	var tmpdir;
 	var prefixFolder = 'new-folder';
 	var dependency = 'string';
 
@@ -234,4 +229,47 @@ describe('with prefix/custom path option', function () {
 			expect(false, error).to.not.equal(false);
 		}
 	});
+});
+
+describe('with dryRun option', function () {
+	var dependencies = ['sane-cli@^0.0.24', 'koa'];
+
+	before(function () {
+		tmpdir = tmp.in(tmproot);
+		this.pathToDep = getPathToDep(dependency, tmpdir);
+		this.pathToPackage = path.resolve(
+			__dirname, tmpdir, 'package.json'
+		);
+		process.chdir(tmpdir);
+	});
+
+	after(function () {
+		process.chdir(root);
+		fs.removeSync(tmproot);
+	});
+
+	it('should not crash', async function () {
+		try {
+			var exitCode = await npm.install({
+				dependencies: dependencies,
+				loglevel: 'silent',
+				production: false,
+				saveDev: true,
+				dryRun: true
+				// 'min-cache': 999999999
+			});
+			expect(exitCode).to.equal(0);
+		} catch (error) {
+			expect(error, error).to.not.exist; //eslint-disable-line no-unused-expressions
+		}
+	});
+
+	it('should save to package.json but not install things', function () {
+		//require does not work because of caching
+		var devDependencies = JSON.parse(fs.readFileSync(this.pathToPackage)).devDependencies;
+		expect(devDependencies).to.include({ 'sane-cli': '^0.0.24', 'koa': '*' });
+		console.log(fs.lstatSync(this.pathToDep));
+		// expect(fs.lstatSync(this.pathToDep)).to.be.an('object');
+	});
+
 });
