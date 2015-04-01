@@ -23,7 +23,7 @@ $ npm install enpeem --save
 var npm = require('enpeem');
 ```
 
-For all supported options look into the `index.js` `install` and `update` function.
+For all supported options look into the `index.js` file, specifically the `install` and `update` function.
 
 #### npm install
 
