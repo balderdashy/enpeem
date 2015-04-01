@@ -28,6 +28,8 @@ if (!arg) {
   files = 'eslint-test.js';
 } else if (arg === 'unit') {
   root = 'tests/unit';
+} else if (arg === 'acceptance') {
+  root = 'tests/acceptance';
 } else {
   root = 'tests/{unit,acceptance}';
 }

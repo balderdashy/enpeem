@@ -236,7 +236,7 @@ describe('with dryRun option', function () {
 
 	before(function () {
 		tmpdir = tmp.in(tmproot);
-		this.pathToDep = getPathToDep(dependency, tmpdir);
+		this.pathToDep = getPathToDep(dependencies[1], tmpdir);
 		this.pathToPackage = path.resolve(
 			__dirname, tmpdir, 'package.json'
 		);
@@ -268,8 +268,12 @@ describe('with dryRun option', function () {
 		//require does not work because of caching
 		var devDependencies = JSON.parse(fs.readFileSync(this.pathToPackage)).devDependencies;
 		expect(devDependencies).to.include({ 'sane-cli': '^0.0.24', 'koa': '*' });
-		console.log(fs.lstatSync(this.pathToDep));
-		// expect(fs.lstatSync(this.pathToDep)).to.be.an('object');
+		try {
+			var result = fs.lstatSync(this.pathToDep);
+			expect(result, 'The module folder should not exist.').to.not.exist; //eslint-disable-line no-unused-expressions
+		} catch (error) {
+			expect(error.message).to.include('no such file or directory');
+		}
 	});
 
 });

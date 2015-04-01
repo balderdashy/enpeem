@@ -23,6 +23,8 @@ $ npm install enpeem --save
 var npm = require('enpeem');
 ```
 
+For all supported options look into the `index.js` `install` and `update` function.
+
 #### npm install
 
 ```javascript
@@ -31,7 +33,11 @@ npm.install({
     'sails@0.10.1',
     'sails-disk@git://github.com/balderdashy/sails-disk.git#associations',
     'lodash'
-  ]
+  ],
+  prefix: 'custom/path/to/install',
+  saveDev: true, //--save-dev flag
+  //saves package to package.json without installing. Only works with save/saveDev option
+  dryRun: true,
   loglevel: 'silent',
   'cache-min': 999999999
 }, function (err) { /* ... */ });
@@ -45,5 +51,3 @@ npm.update({
   loglevel: 'silent'
 }, function (err) { /* ... */ });
 ```
-
-
