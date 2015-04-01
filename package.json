@@ -38,7 +38,7 @@
     "babel-eslint": "^2.0.2",
     "chai": "^2.2.0",
     "chalk": "^1.0.0",
-    "fs-extra": "~0.16.3",
+    "fs-extra": "^0.18.0",
     "glob": "^5.0.3",
     "mocha": "^2.2.1",
     "mocha-eslint": "^0.1.3",

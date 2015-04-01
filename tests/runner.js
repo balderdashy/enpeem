@@ -22,12 +22,14 @@ var arg = process.argv[2];
 var root = '';
 var files = '/**/*-test.js';
 if (!arg) {
-  var root = 'tests/{unit,acceptance}';
+  root = 'tests/{unit,acceptance}';
 } else if (arg === 'lint') {
-  var root = 'tests/unit/';
+  root = 'tests/unit/';
   files = 'eslint-test.js';
+} else if (arg === 'unit') {
+  root = 'tests/unit';
 } else {
-  var root = 'tests/{unit,acceptance}';
+  root = 'tests/{unit,acceptance}';
 }
 
 function addFiles(mocha, files) {
