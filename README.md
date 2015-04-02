@@ -27,7 +27,8 @@ For all supported options look into the `index.js` file, specifically the `insta
 
 #### npm install
 
-```javascript
+```js
+// Returns a promise
 npm.install({
   dependencies: [
     'sails@0.10.1',
@@ -40,14 +41,23 @@ npm.install({
   dryRun: true,
   loglevel: 'silent',
   'cache-min': 999999999
-}, function (err) { /* ... */ });
+}).then(function (exitCode){
+  //do stuff
+}, function (error) {
+  //do stuff with the error
+});
 ```
 
 
 #### npm update
 
-```javascript
+```js
+// Returns a promise
 npm.update({
   loglevel: 'silent'
-}, function (err) { /* ... */ });
+}).then(function (exitCode){
+  //do stuff
+}, function (error) {
+  //do stuff with the error
+});
 ```
