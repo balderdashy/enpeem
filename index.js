@@ -2,9 +2,11 @@
  * Module dependencies
  */
 
-var concat = require('./reduceStream').concat;
-var exec = require('child_process').exec;
-var Err = require('./errors');
+var
+  concat = require('./reduceStream').concat,
+  exec = require('child_process').exec,
+  execSync = require('child_process').execSync,
+  Err = require('./errors');
 
 
 
@@ -20,13 +22,14 @@ module.exports = {
   install: function(options, cb) {
     return doNpmCommand({
       npmCommand: 'install',
+      sync: options.sync || false,
       cmdArgs: options.dependencies,
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined,
         save: options.save || false,
         'save-dev': options.saveDev || false,
-        prefix: options.prefix || undefined,
+        prefix: options.prefix || undefined
       }
     }, cb);
   },
@@ -39,12 +42,13 @@ module.exports = {
   update: function(options, cb) {
     return doNpmCommand({
       npmCommand: 'update',
+      sync: options.sync || false,
       path: options.path || '',
       cmdArgs: [],
       cmdOptions: {
         production: options.production || false,
         loglevel: options.loglevel || undefined,
-        prefix: options.prefix || undefined,
+        prefix: options.prefix || undefined
       }
     }, cb);
   }
@@ -104,7 +108,7 @@ function doNpmCommand(options, cb) {
     // console.log(cmd);
 
     // Spin up child process
-    var npm = exec(cmd);
+    var npm = options.sync ? execSync : exec(cmd);
     var stderr$npm = npm.stderr;
     var stdout$npm = npm.stdout;
 
