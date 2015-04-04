@@ -32,6 +32,22 @@ module.exports = {
   },
 
   /**
+   * Link locallay (or globally) a NPM package
+   * @param  {[type]}   options [description]
+   * @param  {Function} cb      [description]
+   * @return {[type]}           [description]
+   */
+  link: function(options, cb) {
+    return doNpmCommand({
+      npmCommand: 'link',
+      cmdArgs: options.dependencies,
+      cmdOptions: {
+        loglevel: options.loglevel || undefined
+      }
+    }, cb);
+  },
+
+  /**
    * @param  {[type]}   options      [description]
    * @param  {Function} cb           [description]
    * @return {[type]}                [description]
