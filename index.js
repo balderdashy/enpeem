@@ -40,6 +40,7 @@ module.exports = {
   link: function(options, cb) {
     return doNpmCommand({
       npmCommand: 'link',
+      scope: options.scope || undefined,
       cmdArgs: options.dependencies,
       cmdOptions: {
         loglevel: options.loglevel || undefined
@@ -118,6 +119,10 @@ function doNpmCommand(options, cb) {
     // DRY:
     // console.log('WOULD HAVE RUN::');
     // console.log(cmd);
+
+    // Setup the scope
+    if (options.scope)
+      process.chdir(options.scope);
 
     // Spin up child process
     var npm = exec(cmd);
