@@ -23,27 +23,41 @@ $ npm install enpeem --save
 var npm = require('enpeem');
 ```
 
+For all supported options look into the `index.js` file, specifically the `install` and `update` function.
+
 #### npm install
 
-```javascript
+```js
+// Returns a promise
 npm.install({
   dependencies: [
     'sails@0.10.1',
     'sails-disk@git://github.com/balderdashy/sails-disk.git#associations',
     'lodash'
-  ]
+  ],
+  prefix: 'custom/path/to/install',
+  saveDev: true, //--save-dev flag
+  //saves package to package.json without installing. Only works with save/saveDev option
+  dryRun: true,
   loglevel: 'silent',
   'cache-min': 999999999
-}, function (err) { /* ... */ });
+}).then(function (exitCode){
+  //do stuff
+}, function (error) {
+  //do stuff with the error
+});
 ```
 
 
 #### npm update
 
-```javascript
+```js
+// Returns a promise
 npm.update({
   loglevel: 'silent'
-}, function (err) { /* ... */ });
+}).then(function (exitCode){
+  //do stuff
+}, function (error) {
+  //do stuff with the error
+});
 ```
-
-
