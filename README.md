@@ -23,10 +23,12 @@ $ npm install enpeem --save
 var npm = require('enpeem');
 ```
 
+
 #### npm install
 
 ```javascript
 npm.install({
+  dir: '/code/my-sweet-node-app',
   dependencies: [
     'sails@0.10.1',
     'sails-disk@git://github.com/balderdashy/sails-disk.git#associations',
@@ -37,6 +39,10 @@ npm.install({
 }, function (err) { /* ... */ });
 ```
 
+> ##### The `dir` option
+>
+> The `dir` option controls where the NPM package will be installed as a dependency. If `dir` is unspecified, it defaults to the current working directory. If `dir` is a relative path, it will be resolved relative to the current working directory.
+>
 
 #### npm update
 

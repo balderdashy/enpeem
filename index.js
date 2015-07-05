@@ -27,7 +27,8 @@ module.exports = {
         save: options.save || false,
         'save-dev': options.saveDev || false,
         prefix: options.prefix || undefined,
-      }
+      },
+      dir: options.dir
     }, cb);
   },
 
@@ -45,7 +46,8 @@ module.exports = {
         production: options.production || false,
         loglevel: options.loglevel || undefined,
         prefix: options.prefix || undefined,
-      }
+      },
+      dir: options.dir
     }, cb);
   }
 };
@@ -104,7 +106,7 @@ function doNpmCommand(options, cb) {
     // console.log(cmd);
 
     // Spin up child process
-    var npm = exec(cmd);
+    var npm = exec(cmd, {cwd: options.dir});
     var stderr$npm = npm.stderr;
     var stdout$npm = npm.stdout;
 
