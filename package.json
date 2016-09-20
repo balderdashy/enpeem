@@ -1,6 +1,6 @@
 {
   "name": "enpeem",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Lightweight wrapper for accessing npm programmatically (alternative to adding `npm` as a dependency)",
   "main": "index.js",
   "scripts": {
