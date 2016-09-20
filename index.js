@@ -26,6 +26,7 @@ module.exports = {
         loglevel: options.loglevel || undefined,
         save: options.save || false,
         'save-dev': options.saveDev || false,
+        'save-exact': options.saveExact || false,
         prefix: options.prefix || undefined,
       },
       dir: options.dir
@@ -83,6 +84,10 @@ function doNpmCommand(options, cb) {
 
     // if ('save' in options && options.save) {
     //     cmd += '--save ';
+    // }
+    //
+    // if ('saveExact' in options && options.saveExact) {
+    //   cmd += '--save-exact ';
     // }
     //
     // if ('saveDev' in options && options.saveDev) {
