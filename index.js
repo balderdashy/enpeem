@@ -34,6 +34,23 @@ module.exports = {
   },
 
   /**
+   * Link locallay (or globally) a NPM package
+   * @param  {[type]}   options [description]
+   * @param  {Function} cb      [description]
+   * @return {[type]}           [description]
+   */
+  link: function(options, cb) {
+    return doNpmCommand({
+      npmCommand: 'link',
+      scope: options.scope || undefined,
+      cmdArgs: options.dependencies,
+      cmdOptions: {
+        loglevel: options.loglevel || undefined
+      }
+    }, cb);
+  },
+
+  /**
    * @param  {[type]}   options      [description]
    * @param  {Function} cb           [description]
    * @return {[type]}                [description]
@@ -109,6 +126,10 @@ function doNpmCommand(options, cb) {
     // DRY:
     // console.log('WOULD HAVE RUN::');
     // console.log(cmd);
+
+    // Setup the scope
+    if (options.scope)
+      process.chdir(options.scope);
 
     // Spin up child process
     var npm = exec(cmd, {cwd: options.dir});
