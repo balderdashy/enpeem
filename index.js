@@ -27,6 +27,7 @@ module.exports = {
         save: options.save || false,
         'save-dev': options.saveDev || false,
         'save-exact': options.saveExact || false,
+        'ignore-scripts': options.ignoreScripts || false,
         prefix: options.prefix || undefined,
       },
       dir: options.dir
