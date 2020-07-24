@@ -3,7 +3,7 @@
  */
 
 var concat = require('./reduceStream').concat;
-var exec = require('child_process').exec;
+var exec = require('child_process').execFile;
 var Err = require('./errors');
 
 
