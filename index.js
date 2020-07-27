@@ -3,7 +3,7 @@
  */
 
 var concat = require('./reduceStream').concat;
-var exec = require('child_process').exec;
+var exec = require('child_process').execFile;
 var Err = require('./errors');
 
 
@@ -68,7 +68,7 @@ function doNpmCommand(options, cb) {
 
   // Check to make sure npm CLI is accessible
   var NPM_V_OUTPUT = /^[0-9]+\.[0-9]+\.[0-9]+/;
-  var stdout$npm_v = exec('npm -v').stdout;
+  var stdout$npm_v = exec('npm', ['-v']).stdout;
   concat(stdout$npm_v, function(err, result) {
     if (err) return cb(err);
     if (typeof result !== 'string' ||
@@ -109,9 +109,13 @@ function doNpmCommand(options, cb) {
     // DRY:
     // console.log('WOULD HAVE RUN::');
     // console.log(cmd);
-
+    
+    // Escaping bad arguments
+    var escape = cmd.split(" ");
+    var fileArg = escape.shift();
+    
     // Spin up child process
-    var npm = exec(cmd, {cwd: options.dir});
+    var npm = exec(fileArg, escape, {cwd: options.dir});
     var stderr$npm = npm.stderr;
     var stdout$npm = npm.stdout;
 
